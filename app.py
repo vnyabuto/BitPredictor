@@ -1,4 +1,3 @@
-# app.py
 import streamlit as st
 import pandas as pd
 import matplotlib.pyplot as plt
@@ -6,6 +5,14 @@ from src.data_loader import load_data
 from src.feature_engineering import engineer_features, add_features
 from src.model_training import load_model, predict_proba_direction
 from src.backtest import backtest_with_sltp
+
+st.set_page_config(page_title="BitPredictor", layout="wide")  # Optional: page config
+st.title("📈 BitPredictor: Real-Time Bitcoin Trend Forecasting")
+st.markdown(
+    """
+    Welcome to **BitPredictor**, your AI-powered assistant for Bitcoin price direction prediction, powered by XGBoost and enriched with realistic backtesting parameters.
+    """
+)
 
 st.set_page_config(page_title="BitPredictor Dashboard", layout="wide")
 
@@ -20,7 +27,9 @@ def load_data_and_features(path):
 def load_trained_model(path="models/model.pkl"):
     return load_model(path)
 
-# Sidebar controls
+with st.sidebar:
+    st.header("⚙️ Strategy Controls")
+
 st.sidebar.header("Controls")
 threshold = st.sidebar.slider("Probability threshold", 0.30, 0.80, 0.50, 0.05)
 fee_rate = st.sidebar.slider("Trading fee rate", 0.0, 0.005, 0.001, 0.0005)
